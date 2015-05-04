@@ -191,13 +191,15 @@ void CLibevServer::readCallBack(bufferevent* bev, void* data)
 	size_t len = evbuffer_get_length(input);
 	//读取数据
 	len = bufferevent_read(bev, msgBuf, 4096);
-	//可以根据数据类型。强转msgbuf
+	//这里就是接收到消息后，然后转给taskcenter处理。
+	//如果是自定义的结构体数据，强转一下就好了。
 	std::cout << "server recv data: " << msgBuf << std::endl;
 	//将读取到的数据移除掉
 	evbuffer_drain(input, len);
 	fprintf(stdout, "drain, len:%d\n", len);
 
-	//发送数据
+	//发送数据到客户端
+	//这里操作是等着到时候处理完毕请求了，然后调用bufferevent_write
 	char* reply = "i has read you data";
 	bufferevent_write(bev, reply, strlen(reply));
 }
