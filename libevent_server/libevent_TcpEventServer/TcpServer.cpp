@@ -67,7 +67,7 @@ void EventLoopThread::threadFunc()
 	struct event_base* base = event_base_new();
 	int iret = evutil_socketpair(AF_INET, SOCK_STREAM, 0, wakeFd_);
 	std::cout << "socket pair ret:" << iret << std::endl;
-	 
+	std::cout << "thread id:" << std::this_thread::get_id() << std::endl;
 	iret = event_assign(&ev_, base, wakeFd_[1], EV_READ | EV_PERSIST, WakeupCallback, this);
 	if (0 != iret)
 	{
@@ -167,13 +167,17 @@ void Channel::readCallback(struct bufferevent* bev, void* data)
 	struct evbuffer* input = bufferevent_get_input(bev);
 	size_t len = evbuffer_get_length(input);
 	//读取数据
-	char* request_line= evbuffer_readln(input, &len, EVBUFFER_EOL_ANY);
-	std::cout << "server read the data: " << request_line << std::endl;
+	len =  bufferevent_read(bev, msg, 4096);
+	echo_context* ptrData = (echo_context*)msg;
+	std::cout << "server read the data: " << ptrData->echo_contents << std::endl;
 	evbuffer_drain(input, len);//将读取到的数据移除掉
 	fprintf(stdout, "drain, len:%d\n", len);
 
  	char* reply = "i has read you data";
- 	bufferevent_write(bev, reply, strlen(reply));
+	echo_context pp;
+	memset(&pp, 0, sizeof(echo_context));
+	memcpy(pp.echo_contents, "i has read you data", 80);
+	bufferevent_write(bev, (char*)&pp, sizeof(echo_context));
 }
 
 void Channel::writeCallback(struct bufferevent* bev, void* data)
@@ -233,7 +237,7 @@ CTcpServer::~CTcpServer()
 
 void CTcpServer::start()
 {
-	eventPool_.setThreadNum(1);
+	eventPool_.setThreadNum(2);
 	eventPool_.start();
 	struct sockaddr_in sin;
 	memset(&sin, 0, sizeof(sockaddr_in));

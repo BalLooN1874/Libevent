@@ -13,6 +13,17 @@
 struct event_base;
 struct bufferevent;
 
+
+struct echo_context{
+	struct event_base *base;
+	struct event *event_write;
+	struct event *event_read;
+	char echo_contents[256];
+	int echo_contents_len;
+	int recved;
+};
+
+
 class EventLoopThread
 {
 public:
@@ -36,6 +47,7 @@ private:
 	std::thread thread_;
 	std::mutex mutex_;
 	std::condition_variable cond_;
+	std::condition_variable cond_execTask;
 	std::vector<Functor> functors_;
 	evutil_socket_t wakeFd_[2];
 	evutil_socket_t connFd_;

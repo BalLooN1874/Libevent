@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libevent_server", "libevent
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libevent_TcpEventServer", "libevent_TcpEventServer\libevent_TcpEventServer.vcxproj", "{74464C99-E780-4F70-8FE5-10B64A5F5FA7}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libev_server", "libev_server\libev_server.vcxproj", "{71FC4C08-278B-46FC-848E-7FB32654B694}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -21,6 +23,10 @@ Global
 		{74464C99-E780-4F70-8FE5-10B64A5F5FA7}.Debug|Win32.Build.0 = Debug|Win32
 		{74464C99-E780-4F70-8FE5-10B64A5F5FA7}.Release|Win32.ActiveCfg = Release|Win32
 		{74464C99-E780-4F70-8FE5-10B64A5F5FA7}.Release|Win32.Build.0 = Release|Win32
+		{71FC4C08-278B-46FC-848E-7FB32654B694}.Debug|Win32.ActiveCfg = Debug|Win32
+		{71FC4C08-278B-46FC-848E-7FB32654B694}.Debug|Win32.Build.0 = Debug|Win32
+		{71FC4C08-278B-46FC-848E-7FB32654B694}.Release|Win32.ActiveCfg = Release|Win32
+		{71FC4C08-278B-46FC-848E-7FB32654B694}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
